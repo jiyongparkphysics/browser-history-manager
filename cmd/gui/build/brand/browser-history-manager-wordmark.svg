@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 620">
+  <defs>
+    <linearGradient id="bg" x1="112" y1="88" x2="900" y2="940" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1a1a1d"/>
+      <stop offset="0.58" stop-color="#111113"/>
+      <stop offset="1" stop-color="#09090a"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="512" y1="124" x2="512" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1d1d20"/>
+      <stop offset="1" stop-color="#111114"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20 54) scale(0.5)">
+    <rect width="1024" height="1024" rx="236" fill="url(#bg)"/>
+    <rect x="54" y="54" width="916" height="916" rx="214" fill="none" stroke="#2a2a2d" stroke-width="8"/>
+    <rect x="124" y="124" width="776" height="776" rx="188" fill="url(#panel)"/>
+    <path d="M182 818V206H282V462H360V206H460V818H360V560H282V818Z" fill="#f0b93c"/>
+    <path d="M552 818V206H642L716 430L790 206H878V818H790V446L716 656H712L640 448V818Z" fill="#f0b93c"/>
+  </g>
+  <text x="610" y="338" fill="#16171a" font-family="'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif" font-size="118" font-weight="800" letter-spacing="-1.5">Browser History Manager</text>
+</svg>
