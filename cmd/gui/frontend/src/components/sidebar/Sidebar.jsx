@@ -80,84 +80,95 @@ export default function Sidebar({
     }
   }
 
-  const renderKeywordGroup = (type, title, hint, colorClass) => (
-    <div className="sb-filter-group">
-      <div className="sb-filter-header">
-        <div>
-          <span className={`sb-filter-label ${colorClass}`}>{title}</span>
-          <span className="sb-filter-hint">{hint}</span>
-        </div>
-        <button
-          className="sb-filter-add"
-          onClick={() => {
-            setAddingTo(addingTo === type ? null : type)
-            setNewKeyword('')
-          }}
-          title="Add keyword"
-        >
-          <span className="material-symbols-outlined">
-            {addingTo === type ? 'close' : 'add_circle'}
-          </span>
-        </button>
-      </div>
+  const closeAddRow = () => {
+    setAddingTo(null)
+    setNewKeyword('')
+  }
 
-      {presets[type].length > 0 ? (
-        <div className="sb-chips">
-          {presets[type].map((item) => (
-            <span
-              key={item.id}
-              className={`sb-chip ${colorClass}${item.enabled ? ' enabled' : ' disabled'}`}
-              onClick={() => toggleKeyword(type, item.id)}
-              title={item.enabled ? `Active: ${item.keyword} (click to disable)` : `Disabled: ${item.keyword} (click to enable)`}
-            >
-              {item.keyword}
-              <span
-                className="material-symbols-outlined sb-chip-remove"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  removeKeyword(type, item.id)
-                }}
-                title="Remove"
-              >
-                close
-              </span>
-            </span>
-          ))}
-        </div>
-      ) : (
-        <span className="sb-empty-hint">No keywords added</span>
-      )}
+  const renderKeywordGroup = (type, title, hint, colorClass) => {
+    const isAdding = addingTo === type
 
-      {addingTo === type && (
-        <div className="sb-add-form">
-          <input
-            type="text"
-            placeholder="e.g. example.com, project name, keyword"
-            value={newKeyword}
-            onChange={(e) => setNewKeyword(e.target.value)}
-            className="sb-add-input"
-            autoFocus
-            onKeyDown={(e) => e.key === 'Enter' && handleAdd(type)}
-          />
-          <div className="sb-add-actions">
-            <button className="sb-add-save" onClick={() => handleAdd(type)} disabled={!newKeyword.trim()}>
-              Add
-            </button>
-            <button
-              className="sb-add-cancel"
-              onClick={() => {
-                setAddingTo(null)
-                setNewKeyword('')
-              }}
-            >
-              Cancel
-            </button>
+    return (
+      <div className="sb-filter-group">
+        <div className="sb-filter-header">
+          <div>
+            <span className={`sb-filter-label ${colorClass}`}>{title}</span>
+            <span className="sb-filter-hint">{hint}</span>
           </div>
+          <button
+            className={`sb-filter-add ${colorClass}${isAdding ? ' active' : ''}`}
+            onClick={() => {
+              if (isAdding) {
+                closeAddRow()
+                return
+              }
+              setAddingTo(type)
+              setNewKeyword('')
+            }}
+            title={isAdding ? 'Close add row' : 'Add keyword'}
+            aria-label={isAdding ? `Close ${title} add row` : `Add ${title} keyword`}
+          >
+            <span className="material-symbols-outlined">{isAdding ? 'close' : 'add'}</span>
+          </button>
         </div>
-      )}
-    </div>
-  )
 
+        {presets[type].length > 0 ? (
+          <div className="sb-chips">
+            {presets[type].map((item) => (
+              <span
+                key={item.id}
+                className={`sb-chip ${colorClass}${item.enabled ? ' enabled' : ' disabled'}`}
+                onClick={() => toggleKeyword(type, item.id)}
+                title={item.enabled ? `Active: ${item.keyword} (click to disable)` : `Disabled: ${item.keyword} (click to enable)`}
+              >
+                <span className="sb-chip-text">{item.keyword}</span>
+                <span
+                  className="material-symbols-outlined sb-chip-remove"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    removeKeyword(type, item.id)
+                  }}
+                  title="Remove"
+                >
+                  close
+                </span>
+              </span>
+            ))}
+          </div>
+        ) : (
+          <span className="sb-empty-hint">No keywords added</span>
+        )}
+
+        {isAdding && (
+          <div className="sb-add-form">
+            <div className={`sb-chip-input-shell ${colorClass}`}>
+              <input
+                type="text"
+                placeholder="e.g. example.com, project name, keyword"
+                value={newKeyword}
+                onChange={(e) => setNewKeyword(e.target.value)}
+                className="sb-add-input"
+                autoFocus
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleAdd(type)
+                  if (e.key === 'Escape') closeAddRow()
+                }}
+              />
+              <button
+                className={`sb-add-submit ${colorClass}`}
+                onClick={() => handleAdd(type)}
+                disabled={!newKeyword.trim()}
+                title="Add keyword"
+                aria-label={`Add ${title} keyword`}
+              >
+                <span className="material-symbols-outlined">add</span>
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
   const renderHelpModal = () => (
     <div className="help-modal-overlay" onClick={() => setShowHelp(false)}>
       <div className="help-modal" onClick={(e) => e.stopPropagation()}>
@@ -185,7 +196,7 @@ export default function Sidebar({
             <ul>
               <li><strong>Include</strong> shows only entries whose title or URL matches these keywords.</li>
               <li><strong>Exclude</strong> hides entries whose title or URL matches these keywords.</li>
-              <li>Click a keyword chip to enable or disable it. Use the close icon to remove it.</li>
+              <li>Click a keyword chip to enable or disable it. Use the close icon to remove it, or the <strong>+</strong> button to open the inline add row.</li>
             </ul>
           </section>
           <section className="help-group">

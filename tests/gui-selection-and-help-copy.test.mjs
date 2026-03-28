@@ -72,6 +72,27 @@ test('help copy describes backup restore and delete behavior', async () => {
   assert.match(appSource, /title: 'Delete'/);
 });
 
+test('filter chip add flow and confirm modal actions follow the shared pill language', async () => {
+  const sidebarSource = await readRepoFile('cmd/gui/frontend/src/components/sidebar/Sidebar.jsx');
+  const modalSource = await readRepoFile('cmd/gui/frontend/src/components/common/ConfirmModal.jsx');
+  const styleSource = await readRepoFile('cmd/gui/frontend/src/style.css');
+
+  assert.doesNotMatch(sidebarSource, /sb-add-cancel/);
+  assert.match(sidebarSource, /sb-add-submit \$\{colorClass\}/);
+  assert.match(sidebarSource, /isAdding \? 'close' : 'add'/);
+  assert.match(sidebarSource, /title="Add keyword"/);
+  assert.match(sidebarSource, /<span className="material-symbols-outlined">add<\/span>/);
+  assert.match(sidebarSource, /sb-chip-input-shell \$\{colorClass\}/);
+  assert.match(styleSource, /\.sb-chip-input-shell/);
+  assert.match(styleSource, /\.sb-chip-input-shell\.tertiary-tint/);
+  assert.match(styleSource, /\.sb-chip-input-shell\.error-tint/);
+  assert.match(styleSource, /\.sb-add-submit\.tertiary-tint/);
+  assert.match(styleSource, /\.sb-add-submit\.error-tint/);
+  assert.doesNotMatch(styleSource, /text-decoration:\s*line-through/);
+  assert.match(modalSource, /sel-pill/);
+  assert.doesNotMatch(modalSource, /modal-btn-confirm|modal-btn-danger|modal-btn-cancel/);
+});
+
 test('page selection preserves off-page selections while toggling current page rows', async () => {
   const { applyPageSelection } = await importRepoModule('cmd/gui/frontend/src/selectionState.js');
 

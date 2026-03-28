@@ -130,11 +130,11 @@ The GUI is split into peer `History | Backups` tabs that share the same active b
 - **Backups tab**: Search backup file names, then browse a backup table with `File Name`, `Created`, `Size`, and `Items` columns for the selected `History` database folder
 - **Shared utilities**: Help in the tab header, plus Refresh and Open DB folder in the active browser block
 - Include/Exclude keywords are applied automatically when enabled on the History tab
-- Clicking a filter chip toggles it on or off; the close icon removes it
+- Clicking a filter chip toggles it on or off; the close icon removes it, and the `+` button opens an inline add row without a separate cancel action
 - The Backups tab reuses the same page navigation pattern as History: page input, previous/next controls, and rows-per-page selector
 - `Restore` is enabled only when exactly one backup is selected
 - `Delete` is enabled when one or more backups are selected and removes matching `-wal` / `-shm` sidecars with each backup
-- The Help dialog shows the current GUI version
+- The Help dialog shows the current GUI version and confirm modals reuse the same action-pill language as the main toolbars
 - Date-range filtering is currently available in the CLI.
 
 ## CLI Options
@@ -214,3 +214,4 @@ The script enables `CGO_ENABLED=1`, locates `gcc.exe` (including common WinGet W
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
+

@@ -23,9 +23,9 @@ export default function ConfirmModal({ isOpen, title, message, onConfirm, onCanc
             <h3 className="modal-title">{title}</h3>
             <p className="modal-message">{message}</p>
             <div className="modal-actions">
-              <button className="modal-btn modal-btn-cancel" onClick={onCancel}>Cancel</button>
-              <button className={`modal-btn ${danger ? 'modal-btn-danger' : 'modal-btn-confirm'}`} onClick={onConfirm}>
-                {danger ? 'Delete' : 'Confirm'}
+              <button className="sel-pill neutral modal-pill" onClick={onCancel}>Cancel</button>
+              <button className={`sel-pill ${danger ? 'red' : 'cyan'} modal-pill`} onClick={onConfirm}>
+                {title}
               </button>
             </div>
           </motion.div>

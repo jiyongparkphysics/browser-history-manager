@@ -95,7 +95,7 @@ the current implementation.
 - Dark background and warm gold accents
 - Fonts:
   Plus Jakarta Sans for headings, Manrope for UI text, JetBrains Mono for tabular data
-- Rounded containers and pill-style action buttons
+- Rounded containers and pill-style action buttons; confirm modals reuse the same action-pill sizing and color semantics as the main toolbars
 - Material Symbols for icons
 - Shared spacing, button sizing, and row heights between `History` and `Backups`
 - Version is shown in the Help modal, not in the top application header
@@ -106,3 +106,4 @@ the current implementation.
 - Multi-panel workspace layout
 - JSON/HTML export from the main GUI toolbar
 - Persistent right-side action drawers
+
